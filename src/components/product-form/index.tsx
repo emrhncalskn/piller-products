@@ -15,8 +15,19 @@ export default function ProductForm({
     defaultValues,
   });
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = async (data: any) => {
+    data.defaultValues = undefined;
+    const res = await fetch("https://piller.com.tr/wp-admin/admin-ajax.php?action=invio_mail",
+      {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/x-www-form-urlencoded" }
+      }
+    )
+      .then((res) => res.json())
+      .then((res) => console.log(res));
+    alert("Teklif isteğiniz alınmıştır. En kısa sürede dönüş yapılacaktır.");
+    console.log(res)
   };
   return (
     <>
